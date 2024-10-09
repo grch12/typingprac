@@ -32,11 +32,12 @@ bool print_line(char* str, size_t pos) {
 
 void check_input(char* str, size_t pos) {
     for (int i = 0; i < COLS; i++) {
-        if (str[pos + i] == '\0' || str[pos + i] == '\n')
+        char current_ch = str[pos + i];
+        if (current_ch == '\0' || current_ch == '\n')
             break;
         int ch = getch();
         if (ch == '\n') end_prac();
-        if (ch == (int)str[pos + i]) {
+        if (ch == (int)current_ch) {
             addch(ch | COLOR_PAIR(1));
         } else {
             addch(ch | COLOR_PAIR(2));
@@ -70,8 +71,7 @@ int main(void) {
         not_ended = print_line(str, pos);
         check_input(str, pos);
         pos += COLS;
-        int y, _;
-        getyx(stdscr, y, _);
+        int y = getcury(stdscr);
         if (y + 2 >= LINES) clear();
     }
 
